@@ -160,8 +160,13 @@ for (const effort of EFFORTS) {
     continue
   }
 
-  const entry = clone(baseEntry)
-  const originalName = typeof entry.name === "string" ? entry.name : undefined
+const entry = clone(baseEntry)
+
+// Generated models have a fixed reasoning effort.
+// Remove native OpenCode variants (Medium / High).
+delete entry.variants
+
+const originalName = typeof entry.name === "string" ? entry.name : undefined
 
   if ("modelID" in entry) {
     entry.modelID = id
