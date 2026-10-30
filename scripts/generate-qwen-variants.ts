@@ -62,7 +62,7 @@ function parseArgs(argv: string[]) {
 }
 
 function isQwen38(modelId: string) {
-  return /^qwen3\.8:/i.test(modelId)
+  return /^qwen3\.8(?::|-legacy-renderer:)/i.test(modelId)
 }
 
 function variantId(baseModel: string, effort: Effort) {

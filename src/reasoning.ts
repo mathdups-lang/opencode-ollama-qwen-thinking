@@ -21,7 +21,12 @@ export function decodeModel(model: string): {
 }
 
 export function isQwen38(model: string): boolean {
-  return model.toLowerCase().startsWith("qwen3.8:")
+  const normalized = model.toLowerCase()
+
+  return (
+    normalized.startsWith("qwen3.8:") ||
+    normalized.startsWith("qwen3.8-legacy-renderer:")
+  )
 }
 
 export function rewriteRequest(body: Record<string, unknown>) {

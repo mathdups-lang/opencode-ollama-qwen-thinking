@@ -36,9 +36,34 @@ describe("rewriteRequest", () => {
     const body = { model: "llama3.2:latest", messages: [] }
     expect(rewriteRequest(body)).toEqual(body)
   })
+  test("rewrites a legacy renderer reasoning variant", () => {
+  expect(rewriteRequest({
+    model: "qwen3.8-legacy-renderer:27b-effort-xhigh",
+    messages: [],
+    stream: true,
+  })).toEqual({
+    model: "qwen3.8-legacy-renderer:27b",
+    messages: [],
+    stream: true,
+    reasoning_effort: "xhigh",
+  })
+})
 })
 
 test("variantModels", () => {
   expect(variantModels("qwen3.8:27b")).toHaveLength(4)
   expect(isQwen38("qwen3.8:27b")).toBe(true)
+})
+
+test("recognizes the legacy renderer model", () => {
+  expect(isQwen38("qwen3.8-legacy-renderer:27b")).toBe(true)
+})
+
+test("generates variants for the legacy renderer model", () => {
+  expect(variantModels("qwen3.8-legacy-renderer:27b")).toEqual([
+    "qwen3.8-legacy-renderer:27b-effort-none",
+    "qwen3.8-legacy-renderer:27b-effort-low",
+    "qwen3.8-legacy-renderer:27b-effort-medium",
+    "qwen3.8-legacy-renderer:27b-effort-xhigh",
+  ])
 })
