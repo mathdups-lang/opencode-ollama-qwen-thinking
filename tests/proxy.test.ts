@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, expect, test } from "bun:test"
 import { connect } from "node:net"
+import { fileURLToPath } from "node:url"
 
 const UPSTREAM_PORT = 31537
 const PROXY_PORT = 31538
@@ -10,7 +11,7 @@ const STREAM_GAP_MS = 12_000
 const IDLE_SOCKET_MS = 12_000
 const SLOW = { timeout: 30_000 }
 
-const PROXY_PATH = new URL("../src/proxy.ts", import.meta.url).pathname
+const PROXY_PATH = fileURLToPath(new URL("../src/proxy.ts", import.meta.url))
 
 type Upstream = {
   server: ReturnType<typeof Bun.serve>

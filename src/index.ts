@@ -1,4 +1,5 @@
 import type { Plugin } from "@opencode-ai/plugin"
+import { fileURLToPath } from "node:url"
 
 const HOST = process.env.QWEN_THINKING_PROXY_HOST ?? "127.0.0.1"
 const PORT = Number(process.env.QWEN_THINKING_PROXY_PORT ?? "11437")
@@ -55,7 +56,7 @@ async function startProxy() {
     return
   }
 
-  const proxyPath = new URL("./proxy.ts", import.meta.url).pathname
+  const proxyPath = fileURLToPath(new URL("./proxy.ts", import.meta.url))
   const child = Bun.spawn(["bun", "run", proxyPath], {
     stdin: "ignore",
     stdout: "ignore",
